@@ -1,4 +1,18 @@
+
 #mapDiv {
     height: 400px;
     width: 100%;
   }
+
+header {
+    text-align: center;
+}
+
+form {
+    text-align: center;
+}
+
+#inputDiv {
+    text-align: center;
+}
+
