@@ -1,19 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brew-For-You</title>
-    <!--Local style sheet-->
-    <link rel="stylesheet" href="style.css">
+<<<<<<< HEAD
     <!--Ulkit style sheet-->
-    <link rel="stylesheet" href="css/uikit.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.4.2/dist/css/uikit.min.css" />
     <script src="js/uikit.min.js"></script>
     <script src="js/uikit-icons.min.js"></script>
+    <!--Local style sheet-->
+    <link rel="stylesheet" href="style.css">
+=======
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+>>>>>>> 0c1f204cd35513222fd2757bd18cfcdc4d82ab71
 </head>
-<body>
 
-    <div></div>
+<body>
+    <header id="header">
+        <h1>Brew For You</h1>
+    </header>
+    <!--Enter Location(Adress?City?)-->
+    <div id="inputDiv">
+        <textarea id="inputText">Search City</textarea>
+        <button id="inputButton">Drink..Drank..Drunk</button>
+    </div>
+    <!--Div that contains filter options / Dependant on API capabilities-->
+    <form>
+        <div id="filtersDiv">
+            <input type="checkbox" id="pet-friendly" class="uk-checkbox" name="pet-friendly">Pet friendly</input>
+            <input type="checkbox" id="brewpub" class="uk-checkbox" name="patio">Brewpub</input>
+            <input type="checkbox" id="food-menu" class="uk-checkbox" name="food-menu">Food Menu</input>
+            <input type="checkbox" id="wine-spirits" class="uk-checkbox" name="wine-spirits"> Wine and Spirits</input>
+        </div>
+    </form>
+    <!-- Will be dynamically populated showing list of different local breweries-->
+    <div id="listDiv">
+        <ul id="brewList"></ul>
+    </div>
+
+
+
+    <!-- Div will by dynamically populated with map showing location and relevant breweries-->
+    <div id="mapDiv"></div>
+    <!-- Information relevant to breweries shown below-->
+    <div id="infoDiv"></div>
+    <!---->
+
+
     <script src="script.js"></script>
 </body>
+
 </html>
