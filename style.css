@@ -9,3 +9,8 @@ form {
 #inputDiv {
     text-align: center;
 }
+
+#mapDiv {
+    height: 400px;
+    width: 500px;
+  }
