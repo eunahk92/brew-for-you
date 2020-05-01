@@ -47,6 +47,17 @@ renderBreweryInfo = () => {
     }
 }
 
+// Map function. (kyle)
+function initMap() {
+    var options = {
+        zoom: 8,
+        center: { lat: 28.5383, lng: -81.3792 }
+    }
+    var map = new google.maps.Map(
+        document.getElementById('mapDiv'), options)
+}
+
+
 // Event listener on search button
 $('#inputButton').on('click', function(e) {
     e.preventDefault();
@@ -65,3 +76,5 @@ $('#listDiv').on('click', '.breweryBtn', function() {
     breweryChosen = $(this).text();
     renderBreweryInfo();
 });
+
+
