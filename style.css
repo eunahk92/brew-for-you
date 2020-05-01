@@ -1,5 +1,6 @@
 header {
     text-align: center;
+    background-color: #FFCC00;
 }
 
 form {
@@ -15,10 +16,35 @@ form {
     width: 500px;
   }
 
-  
+  #inputButton {
+    font-family: 'Ubuntu', sans-serif;
+    background-color: #ffab00;
+}
+
+h3 {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+p {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+body {
+    background-image: url("Assets/wood\ bkg.jpg");
+    min-height: 100%;
+    min-width: 1024px;
+    width: 100%;
+    height: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
 
   .main-footer {
  padding: 7px   ;
  text-align: center;
  background-color: orange;
+ position: absolute;
+ bottom: 0;
+ width: 100%;
   }
