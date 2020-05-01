@@ -14,3 +14,11 @@ form {
     height: 400px;
     width: 500px;
   }
+
+  
+
+  .main-footer {
+ padding: 7px   ;
+ text-align: center;
+ background-color: orange;
+  }
