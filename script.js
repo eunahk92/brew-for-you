@@ -1,12 +1,15 @@
-var city, breweryChosen, checkedIn, filterArr, breweryArr, favoritesArr, breweriesVisitedArr;
-var apiKey = 'f0f1c2d6933e72fd38132ddbf886630f';
+var city, state, breweryChosen, checkedIn, filterArr, breweryArr;
+var breweryCounter = 0;
+var toVisitArr = JSON.parse(localStorage.getItem('visit brewery')) || [];
+var breweriesVisitedArr = JSON.parse(localStorage.getItem('check in brewery')) || [];
+var apiKey = '07fd8e30-8eae-4f5f-a07d-ad2608235d7d';
 
 // Render list of nearby breweries
 renderList = () => {
     $('#listDiv').empty();
 
     // Ajax call for breweries nearby
-    let queryURL = `https://api.openbrewerydb.org/breweries?by_city=${city}`;
+    var queryURL = `https://api.openbrewerydb.org/breweries?by_city=${city}&by_state=${state}`;
     $.ajax({
         url: queryURL, 
         method: "GET"
@@ -22,6 +25,15 @@ renderList = () => {
             $('#listDiv').append(breweryLi);
         }
     })
+
+    // var query2URL = `https://api.catalog.beer/${apiKey}`;
+    // $.ajax({
+    //     url: query2URL, 
+    //     method: "GET"
+    // }).then(function(response) {
+    //     console.log(response);
+
+    // })
 }
 
 // Render information about the brewery chosen
@@ -31,14 +43,16 @@ renderBreweryInfo = () => {
         if (breweryArr[i].name === breweryChosen) {
             var brewery = breweryArr[i];
             var zipcode = brewery.postal_code.substr(0,5);
+            var breweryNumber = `${brewery.phone.substr(0, 3)}-${brewery.phone.substr(3, 3)}-${brewery.phone.substr(6,4)}`;
             var breweryInfo = `
-                <h3 id="breweryName">${brewery.name}</h3>
-                <p>${brewery.street}</p>
-                <p>${brewery.city}, ${brewery.state} ${zipcode}</p>
-                <p>${brewery.phone}</p>
+                <h3>${brewery.name}</h3>
+                <p>${brewery.street}, ${brewery.city}, ${brewery.state} ${zipcode}</p>
+                <p>${breweryNumber}</p>
                 <p>Type of brewery: ${brewery.brewery_type}</p>
                 <a href="${brewery.website_url}" target="_blank">Click me to view their website</a><br>
-                <button type="button" id="checkInBtn">Check In</button> | <button type="button" id="visitLaterBtn">Visit Later</button>
+                <button type="button" id="checkInBtn" data-name="${brewery.name}">Check In</button> | 
+                <button type="button" id="visitLaterBtn" data-name="${brewery.name}">Visit Later</button> | 
+
             `
             $('#infoDiv').append(breweryInfo);
             
@@ -74,6 +88,12 @@ $('#inputButton').on('click', function(e) {
     $('#inputText').val('');
 });
 
+// Event listener on state search button
+$('#inputButton').on('click', function() {
+    state = $('#inputText').val().trim();
+    renderList();
+});
+
 // Event listener for a checked filter
 $('#listDiv').on('click', '.filterBtn', function() {
     var chosenFilter = $(this).sibling.attr('data-filter');
@@ -90,15 +110,20 @@ $('#listDiv').on('click', '.breweryBtn', function() {
 });
 
 // Event listener for the check in button
-$('#checkInBtn').on('click', function() {
-    var breweryName = $(this).sibling('#breweryName').text();
-    console.log(breweryName);
-    breweriesVisitedArr.push(breweryName);
-    console.log(breweriesVisitedArr);
+$('#infoDiv').on('click', '#checkInBtn', function() {
+    var breweryName = $(this).attr('data-name');
+    if (breweriesVisitedArr.indexOf(breweryName) == -1) {
+        breweriesVisitedArr.push(breweryName);
+        localStorage.setItem("check in brewery", JSON.stringify(breweriesVisitedArr));
+        breweryCounter++;
+    } 
 });
 
 // Event listener for the visit later button
-$('#infoDiv').on('click', '.breweryBtn', function() {
-    var breweryName = $(this).sibling('#breweryName').text();
-    favoritesArr.push(breweryName);
+$('#infoDiv').on('click', '#visitLaterBtn', function() {
+    var breweryName = $(this).attr('data-name');
+    if (toVisitArr.indexOf(breweryName) == -1) {
+        toVisitArr.push(breweryName);
+        localStorage.setItem("visit brewery", JSON.stringify(toVisitArr));
+    } 
 });
