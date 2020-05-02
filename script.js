@@ -52,22 +52,32 @@ renderBreweryInfo = () => {
                 <a href="${brewery.website_url}" target="_blank">Click me to view their website</a><br>
                 <button type="button" id="checkInBtn" data-name="${brewery.name}">Check In</button> | 
                 <button type="button" id="visitLaterBtn" data-name="${brewery.name}">Visit Later</button> | 
+
             `
             $('#infoDiv').append(breweryInfo);
-            // function initMap that will load map (needs kyle JS updates) and is grabbing lat & long
-            // initMap(brewery.latitude, brewery.longitude);
+            
+            initMap(parseFloat(breweryArr[i].latitude), parseFloat(breweryArr[i].longitude));
         }
     }
 }
 
 // Map function. (kyle)
-function initMap() {
+function initMap(lat, lng) {
+    var myLatLng = {lat: lat,lng: lng};
+    
     var options = {
-        zoom: 8,
-        center: { lat: 28.5383, lng: -81.3792 }
+        zoom:14,
+        center:{lat: lat,lng: lng}
     }
-    var map = new google.maps.Map(
-        document.getElementById('mapDiv'), options)
+    var map = new google.maps.Map(document.getElementById('mapDiv'), options)
+
+    var marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+        animation: google.maps.Animation.DROP
+    });
+    
+
 }
 
 // Event listener on search button
