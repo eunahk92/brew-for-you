@@ -48,3 +48,15 @@ body {
  bottom: 0;
  width: 100%;
   }
+
+#centerdiv {
+    display: none;
+}
+
+.breweryBtn {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 25px;
+    border-radius: 4px;
+    width: 100%;
+    display: block;
+  }
