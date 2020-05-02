@@ -1,8 +1,8 @@
-var city, breweryChosen, filterArr, breweryArr;
+var city, breweryChosen, checkedIn, filterArr, breweryArr, favoritesArr, breweriesVisitedArr;
+var apiKey = 'f0f1c2d6933e72fd38132ddbf886630f';
 
 // Render list of nearby breweries
 renderList = () => {
-    // Clear div if another city is searched
     $('#listDiv').empty();
 
     // Ajax call for breweries nearby
@@ -16,7 +16,6 @@ renderList = () => {
         for (var i = 0; i < breweryArr.length; i++) {
             // List available brewery names
             var breweryName = breweryArr[i].name;
-            console.log(breweryName);
             var breweryLi = `
                 <button type="button" class="breweryBtn">${breweryName}</button>
             `
@@ -33,12 +32,13 @@ renderBreweryInfo = () => {
             var brewery = breweryArr[i];
             var zipcode = brewery.postal_code.substr(0,5);
             var breweryInfo = `
-                <h3>${brewery.name}</h3>
+                <h3 id="breweryName">${brewery.name}</h3>
                 <p>${brewery.street}</p>
                 <p>${brewery.city}, ${brewery.state} ${zipcode}</p>
                 <p>${brewery.phone}</p>
                 <p>Type of brewery: ${brewery.brewery_type}</p>
-                <a href="${brewery.website_url}">Click me to view their website</a>
+                <a href="${brewery.website_url}">Click me to view their website</a><br>
+                <button type="button" id="checkInBtn">Check In</button> | <button type="button" id="visitLaterBtn">Visit Later</button>
             `
             $('#infoDiv').append(breweryInfo);
             // function initMap that will load map (needs kyle JS updates) and is grabbing lat & long
@@ -57,12 +57,12 @@ function initMap() {
         document.getElementById('mapDiv'), options)
 }
 
-
 // Event listener on search button
 $('#inputButton').on('click', function(e) {
     e.preventDefault();
     city = $('#inputText').val().trim();
     renderList();
+    $('#inputText').val('');
 });
 
 // Event listener for a checked filter
@@ -74,7 +74,22 @@ $('#listDiv').on('click', '.filterBtn', function() {
 // Event listener for the brewery buttons
 $('#listDiv').on('click', '.breweryBtn', function() {
     breweryChosen = $(this).text();
+    if ($('#centerdiv').css('display') === 'none') {
+        $('#centerdiv').attr('style', 'display:block');
+    }
     renderBreweryInfo();
 });
 
+// Event listener for the check in button
+$('#checkInBtn').on('click', function() {
+    var breweryName = $(this).sibling('#breweryName').text();
+    console.log(breweryName);
+    breweriesVisitedArr.push(breweryName);
+    console.log(breweriesVisitedArr);
+});
 
+// Event listener for the visit later button
+$('#infoDiv').on('click', '.breweryBtn', function() {
+    var breweryName = $(this).sibling('#breweryName').text();
+    favoritesArr.push(breweryName);
+});
