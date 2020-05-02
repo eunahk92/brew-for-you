@@ -51,6 +51,7 @@ body {
 
 #centerdiv {
     display: none;
+
 }
 
 .breweryBtn {
@@ -60,3 +61,5 @@ body {
     width: 100%;
     display: block;
   }
+}
+
