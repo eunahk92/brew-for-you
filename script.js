@@ -127,3 +127,4 @@ $('#infoDiv').on('click', '#visitLaterBtn', function() {
         localStorage.setItem("visit brewery", JSON.stringify(toVisitArr));
     } 
 });
+
