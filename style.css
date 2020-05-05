@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+  }
+  
 header {
     text-align: center;
     background-color: #FFCC00;
@@ -21,6 +25,10 @@ form {
     background-color: #ffab00;
 }
 
+h1 {
+    font-family: 'Ubuntu', sans-serif;
+}
+
 h3 {
     font-family: 'Ubuntu', sans-serif;
 }
@@ -31,21 +39,18 @@ p {
 
 body {
     background-image: url("Assets/wood\ bkg.jpg");
-    min-height: 100%;
-    min-width: 1024px;
-    width: 100%;
-    height: auto;
-    position: fixed;
+    background-repeat: repeat;
     top: 0;
     left: 0;
 }
 
   .main-footer {
  padding: 7px   ;
+ position: fixed;
+ left: 0;
+ bottom: 0;
  text-align: center;
  background-color: orange;
- position: absolute;
- bottom: 0;
  width: 100%;
   }
 
@@ -61,5 +66,21 @@ body {
     width: 100%;
     display: block;
   }
+
+#clickMeImage {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 25px;
+    border: none;
+    height: 550px;
+    width: 525px;
 }
 
+#clickMeDiv {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 25px;
+    border: none;
+}
