@@ -111,3 +111,4 @@ $('#infoDiv').on('click', '#visitLaterBtn', function() {
 });
 
 $('#inputButton').on('click', userSearch);
+
