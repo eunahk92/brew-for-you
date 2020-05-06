@@ -16,7 +16,7 @@ form {
     width: 500px;
   }
 
-  #inputButton {
+#inputButton {
     font-family: 'Ubuntu', sans-serif;
     background-color: #ffab00;
 }
@@ -56,10 +56,16 @@ body {
 
 .breweryBtn {
     font-family: 'Ubuntu', sans-serif;
-    font-size: 25px;
+    font-size: 12px;
     border-radius: 4px;
     width: 100%;
     display: block;
-  }
 }
 
+footer {
+    margin-top: 50px;
+}
+
+.team_names {
+    list-style-type: none;
+}
