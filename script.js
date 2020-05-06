@@ -1,4 +1,4 @@
-var city, state, breweryChosen, checkedIn, filterArr, breweryArr;
+var city, state, breweryChosen, checkedIn, filterArr, breweryArr, breweryDatabaseArr;
 var breweryCounter = 0;
 var toVisitArr = JSON.parse(localStorage.getItem('visit brewery')) || [];
 var breweriesVisitedArr = JSON.parse(localStorage.getItem('check in brewery')) || [];
@@ -7,7 +7,7 @@ var apiKey = '07fd8e30-8eae-4f5f-a07d-ad2608235d7d';
 // Render list of nearby breweries
 renderList = () => {
     $('#listDiv').empty();
-
+    console.log(state);
     // Ajax call for breweries nearby
     var queryURL = `https://api.openbrewerydb.org/breweries?by_city=${city}&by_state=${state}`;
     $.ajax({
@@ -15,25 +15,19 @@ renderList = () => {
         method: "GET"
     }).then(function(response) {
         breweryArr = response;
-        console.log(breweryArr);
         for (var i = 0; i < breweryArr.length; i++) {
             // List available brewery names
             var breweryName = breweryArr[i].name;
             var breweryLi = `
-                <button type="button" class="breweryBtn">${breweryName}</button>
+                <button type="button" class="breweryBtn uk-width-1-1">${breweryName}</button>
             `
             $('#listDiv').append(breweryLi);
         }
+        if (breweryArr.length === 0) {
+            var errorAlert = `<p>Nothing nearby :( </p>`
+            $('#listDiv').append(errorAlert);
+        }
     })
-
-    // var query2URL = `https://api.catalog.beer/${apiKey}`;
-    // $.ajax({
-    //     url: query2URL, 
-    //     method: "GET"
-    // }).then(function(response) {
-    //     console.log(response);
-
-    // })
 }
 
 // Render information about the brewery chosen
@@ -52,10 +46,8 @@ renderBreweryInfo = () => {
                 <a href="${brewery.website_url}" target="_blank">Click me to view their website</a><br>
                 <button type="button" id="checkInBtn" data-name="${brewery.name}">Check In</button> | 
                 <button type="button" id="visitLaterBtn" data-name="${brewery.name}">Visit Later</button> | 
-
             `
             $('#infoDiv').append(breweryInfo);
-            
             initMap(parseFloat(breweryArr[i].latitude), parseFloat(breweryArr[i].longitude));
         }
     }
@@ -76,29 +68,18 @@ function initMap(lat, lng) {
         map: map,
         animation: google.maps.Animation.DROP
     });
-    
 
 }
 
 // Event listener on search button
-$('#inputButton').on('click', function(e) {
+userSearch = (e) => {
     e.preventDefault();
+
     city = $('#inputText').val().trim();
+    state = $('.statesList option:selected').val();
     renderList();
     $('#inputText').val('');
-});
-
-// Event listener on state search button
-$('#inputButton').on('click', function() {
-    state = $('#inputText').val().trim();
-    renderList();
-});
-
-// Event listener for a checked filter
-$('#listDiv').on('click', '.filterBtn', function() {
-    var chosenFilter = $(this).sibling.attr('data-filter');
-    filterArr.push(chosenFilter);
-})
+}
 
 // Event listener for the brewery buttons
 $('#listDiv').on('click', '.breweryBtn', function() {
@@ -107,6 +88,7 @@ $('#listDiv').on('click', '.breweryBtn', function() {
         $('#centerdiv').attr('style', 'display:block');
     }
     renderBreweryInfo();
+    // getBreweryID();
 });
 
 // Event listener for the check in button
@@ -127,3 +109,5 @@ $('#infoDiv').on('click', '#visitLaterBtn', function() {
         localStorage.setItem("visit brewery", JSON.stringify(toVisitArr));
     } 
 });
+
+$('#inputButton').on('click', userSearch);
