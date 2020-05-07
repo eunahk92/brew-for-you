@@ -6,6 +6,8 @@ var toVisitArr = JSON.parse(localStorage.getItem('visit-later')) || [];
 var favoritesCounter = JSON.parse(localStorage.getItem('total-favs')) || 0;
 var favoritesArr = JSON.parse(localStorage.getItem('favorite')) || [];
 var apiKey = '07fd8e30-8eae-4f5f-a07d-ad2608235d7d';
+var googleAPIKey = 'AIzaSyCVSbsCoys4-y9UHlX6z93OzyWKnOgnTGw';
+var userLat, userLng;
 
 // Set local storage counter values on nav bar
 renderCount = () => {
@@ -53,6 +55,7 @@ renderBreweryInfo = () => {
             var brewery = breweryArr[i];
             var zipcode = brewery.postal_code.substr(0,5);
             var breweryNumber = `${brewery.phone.substr(0, 3)}-${brewery.phone.substr(3, 3)}-${brewery.phone.substr(6,4)}`;
+            var breweryAddress = breweryArr[i].street + " " + breweryArr[i].city + " " + breweryArr[i].state + " " + breweryArr[i].postal_code.substr(0,5)
             var breweryInfo = `
                 <h3>${brewery.name}</h3>
                 <p>${brewery.street}, ${brewery.city}, ${brewery.state} ${zipcode}</p>
@@ -64,27 +67,76 @@ renderBreweryInfo = () => {
                 <button type="button" id="visitLaterBtn" data-name="${brewery.name}">Save For Later</button> 
             `
             $('#infoDiv').append(breweryInfo);
-            initMap(parseFloat(breweryArr[i].latitude), parseFloat(breweryArr[i].longitude));
+            if(!breweryArr[i].latitude) {
+                var geocodeURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + breweryAddress + "&key=" + googleAPIKey;
+                $.ajax({
+                    url: geocodeURL,
+                    method: "GET"
+                }).then(function(response){
+                    var geocodeArr = response;
+                    //console.log(geocodeArr);
+                    var geocodeLat = geocodeArr.results[0].geometry.location.lat;
+                    var geocodeLng = geocodeArr.results[0].geometry.location.lng;
+                   
+                    initMap(geocodeLat, geocodeLng);
+                })
+            } else{
+                initMap(parseFloat(breweryArr[i].latitude), parseFloat(breweryArr[i].longitude));
+            }
         }
     }
 }
 
 // Map function. (kyle)
 function initMap(lat, lng) {
-    var myLatLng = {lat: lat,lng: lng};
     
-    var options = {
-        zoom:14,
-        center:{lat: lat,lng: lng}
+    if (navigator.geolocation) {
+        //console.log("Test1")
+        if (!userLat) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                userLat = position.coords.latitude;
+                userLng = position.coords.longitude;
+                var map = new google.maps.Map(document.getElementById('mapDiv'), {
+                    zoom:13,
+                    center:{lat: userLat,lng: userLng}
+                })
+                  //console.log("test2")
+                var pos = {
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude
+                };
+                var marker = new google.maps.Marker({
+                  position: pos,
+                  map: map,
+                  animation: google.maps.Animation.DROP,
+                  icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png' 
+                })
+                map.setCenter(pos);
+              });
+        } else {
+            var myLatLng = {lat: lat,lng: lng};
+    
+            var options = {
+                zoom:13,
+                center:{lat: lat,lng: lng}
+            }
+            var map = new google.maps.Map(document.getElementById('mapDiv'), options)
+        
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                animation: google.maps.Animation.DROP
+            });
+
+            var userMarker = new google.maps.Marker({
+                position: {lat:userLat, lng:userLng},
+                map: map,
+                animation: google.maps.Animation.DROP,
+                icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+            });
+        }
+        
     }
-    var map = new google.maps.Map(document.getElementById('mapDiv'), options)
-
-    var marker = new google.maps.Marker({
-        position: myLatLng,
-        map: map,
-        animation: google.maps.Animation.DROP
-    });
-
 }
 
 // Render more info for breweries

@@ -1,6 +1,6 @@
 html {
     scroll-behavior: smooth;
-  }
+}
   
 header {
     text-align: center;
@@ -17,8 +17,8 @@ form {
 
 #mapDiv {
     height: 400px;
-    width: 500px;
-  }
+    width: 100%;
+}
 
 #inputButton {
     font-family: 'Ubuntu', sans-serif;
