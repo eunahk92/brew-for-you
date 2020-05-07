@@ -1,5 +1,7 @@
 html {
     scroll-behavior: smooth;
+    background-image: url("Assets/wood\ bkg.jpg");
+    background-repeat: repeat;
 }
   
 header {
@@ -35,13 +37,6 @@ h3 {
 
 p {
     font-family: 'Ubuntu', sans-serif;
-}
-
-body {
-    background-image: url("Assets/wood\ bkg.jpg");
-    background-repeat: repeat;
-    top: 0;
-    left: 0;
 }
 
 .main-footer {
