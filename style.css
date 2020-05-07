@@ -44,7 +44,7 @@ body {
     left: 0;
 }
 
-  .main-footer {
+.main-footer {
  padding: 7px   ;
  position: fixed;
  left: 0;
@@ -52,7 +52,7 @@ body {
  text-align: center;
  background-color: orange;
  width: 100%;
-  }
+}
 
 #centerdiv {
     display: none;
@@ -84,10 +84,10 @@ body {
     border-radius: 25px;
     border: none;
 }
-footer {
-    margin-top: 50px;
-}
 
-.team_names {
+#navigationBar {
+    background-color: #fffacd;
+}
+.navbarCounter {
     list-style-type: none;
 }
