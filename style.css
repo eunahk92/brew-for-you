@@ -17,6 +17,10 @@ form {
     text-align: center;
 }
 
+#rightdiv{
+    margin-bottom: 30px;
+}
+
 #mapDiv {
     height: 400px;
     width: 100%;
