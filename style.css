@@ -83,3 +83,8 @@ p {
 .navbarCounter {
     list-style-type: none;
 }
+
+#futureBreweryList, #checkedInBreweryList, #favoritedBreweryList {
+    font-size: 25px;
+    vertical-align: middle;
+}
