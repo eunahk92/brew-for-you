@@ -40,13 +40,12 @@ p {
 }
 
 .main-footer {
- padding: 7px   ;
- position: fixed;
- left: 0;
- bottom: 0;
- text-align: center;
- background-color: orange;
- width: 100%;
+    padding: 7px   ;
+    left: 0;
+    bottom: 0;
+    text-align: center;
+    background-color: orange;
+    width: 100%;
 }
 
 #centerdiv {
