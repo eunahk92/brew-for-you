@@ -1,22 +1,17 @@
 var city, state, breweryChosen, checkedIn, filterArr, breweryArr, breweryDatabaseArr;
-var totalVisitedCounter = JSON.parse(localStorage.getItem('total-visited')) || 0;
 var breweriesVisitedArr = JSON.parse(localStorage.getItem('checked-in')) || [];
-var visitLaterCounter = JSON.parse(localStorage.getItem('total-visit-later')) || 0;
 var toVisitArr = JSON.parse(localStorage.getItem('visit-later')) || [];
-var favoritesCounter = JSON.parse(localStorage.getItem('total-favs')) || 0;
-var favoritesArr = JSON.parse(localStorage.getItem('favorite')) || [];
-var apiKey = '07fd8e30-8eae-4f5f-a07d-ad2608235d7d';
+var favoritesArr = JSON.parse(localStorage.getItem('favorites')) || [];
+// var apiKey = '07fd8e30-8eae-4f5f-a07d-ad2608235d7d';
 var googleAPIKey = 'AIzaSyCVSbsCoys4-y9UHlX6z93OzyWKnOgnTGw';
 var userLat, userLng;
 
 // Set local storage data counter data to the page
 renderCounts = () => {
-    $('#brewery-checkin').text(totalVisitedCounter);
-    $('#brewery-visitLater').text(visitLaterCounter);
-    $('#visitLaterBreweryList').text(toVisitArr);
-    $('#brewery-favorites').text(favoritesCounter);
-    $('#favoritedBreweryList').text(favoritesArr);
-    if (favoritesCounter >= 2) {
+    $('#brewery-checkin').text(breweriesVisitedArr.length);
+    $('#brewery-visitLater').text(toVisitArr.length);
+    $('#brewery-favorites').text(favoritesArr.length);
+    if (favoritesArr.length >= 2) {
         $('#favorites-text').text('Favorites');
     } else {
         $('#favorites-text').text('Favorite');
@@ -24,22 +19,24 @@ renderCounts = () => {
 }
 renderCounts();
 
-// Set local storage data for checked in breweries
+// Set local storage data for respective breweries list
 displayLists = () => {
     $('#checkedInBreweryList, #favoritedBreweryList, #futureBreweryList').empty();
     for (var c = 0; c < breweriesVisitedArr.length; c++) {
-        var beerIcon = `<i class="fas fa-beer fa-2x"></i>`
-        var theVisitedList = `${beerIcon} ${breweriesVisitedArr[c]}<br>`
+        var beerIcon = `<i class="fas fa-beer fa-1x uk-margin-small-right"></i>`;
+        var theVisitedList = `${beerIcon} ${breweriesVisitedArr[c]}<br>`;
         $('#checkedInBreweryList').append(theVisitedList);
     }
-    for (var c = 0; c < favoritesArr.length; c++) {
-        var thumbsUpIcon = `<i class="far fa-thumbs-up fa-2x"></i>`
-        var theFavList = `${thumbsUpIcon} ${favoritesArr[c]} <br>`
+    for (var d = 0; d < favoritesArr.length; d++) {
+        var thumbsUpIcon = `<i class="far fa-thumbs-up fa-1x uk-margin-small-right"></i>`;
+        var deleteIcon = `<i class="fas fa-times uk-align-right" id="deleteItem" data-index="${d}"></i>`;
+        var theFavList = `${thumbsUpIcon} ${favoritesArr[d]} ${deleteIcon}<br>`;
         $('#favoritedBreweryList').append(theFavList);
     }
-    for (var c = 0; c < toVisitArr.length; c++) {
-        var pinIcon = `<i class="fas fa-map-pin fa-2x"></i>`
-        var theVisitLaterList = `${pinIcon} ${toVisitArr[c]} <br>`
+    for (var e = 0; e < toVisitArr.length; e++) {
+        var pinIcon = `<i class="fas fa-map-pin fa-1x uk-margin-small-right"></i>`;
+        var checkIcon = `<i class="fas fa-check uk-align-right" id="checkOff" data-index="${e}"></i>`;
+        var theVisitLaterList = `${pinIcon} ${toVisitArr[e]} ${checkIcon}<br>`;
         $('#futureBreweryList').append(theVisitLaterList);
     }
 } 
@@ -85,9 +82,9 @@ renderBreweryInfo = () => {
                 <p>${breweryNumber}</p>
                 <p>Type of brewery: ${brewery.brewery_type}</p>
                 <a href="${brewery.website_url}" target="_blank">Click me to view their website</a><br>
-                <button type="button" id="checkInBtn" data-name="${brewery.name}">Check-in</button> |  
-                <button type="button" id="favoritesBtn" data-name="${brewery.name}">Favorite</button> | 
-                <button type="button" id="visitLaterBtn" data-name="${brewery.name}">Save For Later</button> 
+                <button type="button" class="uk-button uk-button-default uk-button-small" id="checkInBtn" data-name="${brewery.name}">Check-in</button> |  
+                <button type="button" class="uk-button uk-button-default uk-button-small" id="favoritesBtn" data-name="${brewery.name}">Favorite</button> | 
+                <button type="button" class="uk-button uk-button-default uk-button-small" id="visitLaterBtn" data-name="${brewery.name}">Save For Later</button> 
             `
             $('#infoDiv').append(breweryInfo);
             if(!breweryArr[i].latitude) {
@@ -186,10 +183,9 @@ $('#infoDiv').on('click', '#checkInBtn', function() {
     var breweryName = $(this).attr('data-name');
     if (breweriesVisitedArr.indexOf(breweryName) == -1) {
         breweriesVisitedArr.push(breweryName);
-        totalVisitedCounter++;
         localStorage.setItem("checked-in", JSON.stringify(breweriesVisitedArr));
-        localStorage.setItem("total-visited", totalVisitedCounter);
-        $('#brewery-checkin').text(totalVisitedCounter);
+        localStorage.setItem("total-visited", breweriesVisitedArr.length);
+        $('#brewery-checkin').text(breweriesVisitedArr.length);
     } 
     displayLists();
 });
@@ -199,15 +195,14 @@ $('#infoDiv').on('click', '#favoritesBtn', function() {
     var breweryName = $(this).attr('data-name');
     if (favoritesArr.indexOf(breweryName) == -1) {
         favoritesArr.push(breweryName);
-        favoritesCounter++;
-        if (favoritesCounter >= 2) {
+        if (favoritesArr.length >= 2) {
             $('#favorites-text').text('Favorites');
         } else {
             $('#favorites-text').text('Favorite');
         }
-        localStorage.setItem("favorite", JSON.stringify(favoritesArr));
-        localStorage.setItem("total-favs", favoritesCounter);
-        $('#brewery-favorites').text(favoritesCounter);
+        localStorage.setItem("favorites", JSON.stringify(favoritesArr));
+        localStorage.setItem("total-favs", favoritesArr.length);
+        $('#brewery-favorites').text(favoritesArr.length);
     } 
     displayLists();
 });
@@ -217,10 +212,9 @@ $('#infoDiv').on('click', '#visitLaterBtn', function() {
     var breweryName = $(this).attr('data-name');
     if (toVisitArr.indexOf(breweryName) == -1) {
         toVisitArr.push(breweryName);
-        visitLaterCounter++
         localStorage.setItem("visit-later", JSON.stringify(toVisitArr));
-        localStorage.setItem("total-visit-later", visitLaterCounter);
-        $('#brewery-visitLater').text(visitLaterCounter);
+        localStorage.setItem("total-visit-later", toVisitArr.length);
+        $('#brewery-visitLater').text(toVisitArr.length);
     } 
     displayLists();
 });
@@ -228,3 +222,22 @@ $('#infoDiv').on('click', '#visitLaterBtn', function() {
 // Event listener for the search button
 $('#inputButton').on('click', userSearch);
 
+// Event listener for visit later check off button
+$('#futureBreweryList').on('click', '#checkOff', function() {
+    var breweryIndex = $(this).attr('data-index');
+    toVisitArr.splice(breweryIndex, 1);
+    localStorage.setItem("visit-later", JSON.stringify(toVisitArr));
+    localStorage.setItem("total-visit-later", toVisitArr.length);
+    displayLists();
+    renderCounts();
+})
+
+// Event listener for delete favorites item button
+$('#favoritedBreweryList').on('click', '#deleteItem', function() {
+    var breweryIndex = $(this).attr('data-index');
+    favoritesArr.splice(breweryIndex, 1);
+    localStorage.setItem("favorites", JSON.stringify(favoritesArr));
+    localStorage.setItem("total-favs", favoritesArr.length);
+    displayLists();
+    renderCounts();
+})
