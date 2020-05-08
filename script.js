@@ -9,18 +9,41 @@ var apiKey = '07fd8e30-8eae-4f5f-a07d-ad2608235d7d';
 var googleAPIKey = 'AIzaSyCVSbsCoys4-y9UHlX6z93OzyWKnOgnTGw';
 var userLat, userLng;
 
-// Set local storage counter values on nav bar
-renderCount = () => {
+// Set local storage data counter data to the page
+renderCounts = () => {
     $('#brewery-checkin').text(totalVisitedCounter);
     $('#brewery-visitLater').text(visitLaterCounter);
+    $('#visitLaterBreweryList').text(toVisitArr);
     $('#brewery-favorites').text(favoritesCounter);
+    $('#favoritedBreweryList').text(favoritesArr);
     if (favoritesCounter >= 2) {
         $('#favorites-text').text('Favorites');
     } else {
         $('#favorites-text').text('Favorite');
     }
 }
-renderCount();
+renderCounts();
+
+// Set local storage data for checked in breweries
+displayLists = () => {
+    $('#checkedInBreweryList, #favoritedBreweryList, #futureBreweryList').empty();
+    for (var c = 0; c < breweriesVisitedArr.length; c++) {
+        var beerIcon = `<i class="fas fa-beer fa-2x"></i>`
+        var theVisitedList = `${beerIcon} ${breweriesVisitedArr[c]}<br>`
+        $('#checkedInBreweryList').append(theVisitedList);
+    }
+    for (var c = 0; c < favoritesArr.length; c++) {
+        var thumbsUpIcon = `<i class="far fa-thumbs-up fa-2x"></i>`
+        var theFavList = `${thumbsUpIcon} ${favoritesArr[c]} <br>`
+        $('#favoritedBreweryList').append(theFavList);
+    }
+    for (var c = 0; c < toVisitArr.length; c++) {
+        var pinIcon = `<i class="fas fa-map-pin fa-2x"></i>`
+        var theVisitLaterList = `${pinIcon} ${toVisitArr[c]} <br>`
+        $('#futureBreweryList').append(theVisitLaterList);
+    }
+} 
+displayLists();
 
 // Render list of nearby breweries
 renderList = () => {
@@ -139,30 +162,6 @@ function initMap(lat, lng) {
     }
 }
 
-// Render more info for breweries
-// getBreweryID = () => {
-//     var query2Url = "https://cors-anywhere.herokuapp.com/https://api.catalog.beer/brewer/?count=7000";
-//     $.ajax({
-//         url: query2Url,
-//         method: "GET",
-//         headers: {
-//             "Authorization": "Basic " + btoa("07fd8e30-8eae-4f5f-a07d-ad2608235d7d : ")
-//         }
-//     }).then(function (response) {
-//         breweryDatabaseArr = response.data;
-//         console.log(breweryDatabaseArr);
-//         for (var y = 0; y < breweryDatabaseArr.length; y++) {
-//             for (var x = 0; x < breweryDatabaseArr[y].length; x++) {
-//                 if (response.data[y][x].name.includes(breweryChosen)) {
-//                     console.log(breweryDatabaseArr[y][x].name)
-//                 } else {
-//                     console.log('cannot find');
-//                 }
-//             }
-//         }
-//     });
-// }
-
 // Function to grab user inputs
 userSearch = (e) => {
     e.preventDefault();
@@ -180,7 +179,6 @@ $('#listDiv').on('click', '.breweryBtn', function() {
         $('#centerdiv').attr('style', 'display:block');
     }
     renderBreweryInfo();
-    // getBreweryID();
 });
 
 // Event listener for the check in button
@@ -193,6 +191,7 @@ $('#infoDiv').on('click', '#checkInBtn', function() {
         localStorage.setItem("total-visited", totalVisitedCounter);
         $('#brewery-checkin').text(totalVisitedCounter);
     } 
+    displayLists();
 });
 
 // Event listener for the favorites button
@@ -210,6 +209,7 @@ $('#infoDiv').on('click', '#favoritesBtn', function() {
         localStorage.setItem("total-favs", favoritesCounter);
         $('#brewery-favorites').text(favoritesCounter);
     } 
+    displayLists();
 });
 
 // Event listener for the visit later button
@@ -222,6 +222,7 @@ $('#infoDiv').on('click', '#visitLaterBtn', function() {
         localStorage.setItem("total-visit-later", visitLaterCounter);
         $('#brewery-visitLater').text(visitLaterCounter);
     } 
+    displayLists();
 });
 
 // Event listener for the search button
