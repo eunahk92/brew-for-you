@@ -18,30 +18,27 @@
 <body>
     <nav id="navigationBar" class="uk-navbar-container" uk-navbar>
             <!-- Total breweries visited on nav bar-->
-            <div class="uk-navbar-left">
-                <button class="uk-button uk-button-default" type="button" uk-toggle="target: #modal-close-checkin">
-                    <ul class="navbarCounter">
+            <div class="uk-navbar-left uk-inline">
+                    <ul class="navbarCounter" uk-toggle="target: #modal-close-checkin">
                         <li class="uk-text-center uk-text-danger uk-text-lead" id="brewery-checkin">#</li>
                         <li class="uk-text-center uk-text-meta">Total Checked In:</li>
                     </ul>
-                </button>
-                 <div id="modal-close-checkin" uk-modal>
-                <div class="uk-modal-dialog uk-modal-body">
-                    <button class="uk-modal-close-default" type="button" uk-close></button>
-                    <h2 class="uk-modal-title">I've been to:</h2>
-                    <div id="checkedInBreweryList"></div>
+                 <div id="modal-close-checkin" uk-dropdown>
+                    <div class="uk-modal-dialog uk-modal-body">
+                        <button class="uk-modal-close-default" type="button" uk-close></button>
+                        <h2 class="uk-modal-title">I've been to:</h2>
+                        <div id="checkedInBreweryList"></div>
+                    </div>
                 </div>
             </div>
             <!-- All favorited breweries on nav bar-->
             </div>
-            <div class="uk-navbar-center">
-                <button class="uk-button uk-button-default" type="button" uk-toggle="target: #modal-close-default">
-                    <ul class="navbarCounter uk-margin-medium-right">
+            <div class="uk-navbar-center uk-margin-small-right">
+                    <ul class="navbarCounter" uk-toggle="target: #modal-close-default">
                         <li class="uk-text-center uk-text-danger uk-text-lead" id="brewery-favorites">#</li>
                         <li class="uk-text-center uk-text-meta" id="favorites-text">Favorite</li>
                     </ul>
-                </button>
-                <div id="modal-close-default" uk-modal>
+                <div id="modal-close-default" uk-dropdown>
                     <div class="uk-modal-dialog uk-modal-body">
                         <button class="uk-modal-close-default" type="button" uk-close></button>
                         <h2 class="uk-modal-title">My Favorites!</h2>
@@ -50,14 +47,12 @@
                 </div>
             </div>
             <!-- Pinned for next time on nav bar-->
-            <div class="uk-navbar-right">
-                <button class="uk-button uk-button-default" type="button" uk-toggle="target: #modal-close-outside">
-                    <ul class="navbarCounter">
+            <div class="uk-navbar-right uk-margin-small-right">
+                    <ul class="navbarCounter" uk-toggle="target: #modal-close-outside">
                         <li class="uk-text-center uk-text-danger uk-text-lead" id="brewery-visitLater">#</li>
                         <li class="uk-text-center uk-text-meta">Pin to Visit Later</li>
                     </ul>
-                </button>
-                <div id="modal-close-outside" uk-modal>
+                <div id="modal-close-outside" uk-dropdown>
                     <div class="uk-modal-dialog uk-modal-body">
                         <button class="uk-modal-close-default" type="button" uk-close></button>
                         <h2 class="uk-modal-title">Be sure to check these out later!</h2>
