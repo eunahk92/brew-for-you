@@ -17,10 +17,6 @@ form {
     text-align: center;
 }
 
-#rightdiv{
-    margin-bottom: 30px;
-}
-
 #mapDiv {
     height: 400px;
     width: 100%;
@@ -31,27 +27,17 @@ form {
     background-color: #ffab00;
 }
 
-h1 {
-    font-family: 'Ubuntu', sans-serif;
-}
-
-h3 {
-    font-family: 'Ubuntu', sans-serif;
-}
-
-p {
+h1, h3, p {
     font-family: 'Ubuntu', sans-serif;
 }
 
 .main-footer {
-    padding: 7px;
+    padding: 7px   ;
     left: 0;
     bottom: 0;
     text-align: center;
     background-color: orange;
     width: 100%;
-
-
 }
 
 #centerdiv {
@@ -85,11 +71,15 @@ p {
     border: none;
 }
 
+#navigationBar {
+    background-color: #FFCC00;
+}
+
 .navbarCounter {
     list-style-type: none;
 }
 
 #futureBreweryList, #checkedInBreweryList, #favoritedBreweryList {
-    font-size: 20px;
+    font-size: 12px;
     vertical-align: middle;
 }

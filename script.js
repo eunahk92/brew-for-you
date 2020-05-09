@@ -29,13 +29,13 @@ displayLists = () => {
     }
     for (var d = 0; d < favoritesArr.length; d++) {
         var thumbsUpIcon = `<i class="far fa-thumbs-up fa-1x uk-margin-small-right"></i>`;
-        var deleteIcon = `<i class="fas fa-times uk-align-right" id="deleteItem" data-index="${d}"></i>`;
+        var deleteIcon = `<i class="fas fa-times" id="deleteItem" data-index="${d}"></i>`;
         var theFavList = `${thumbsUpIcon} ${favoritesArr[d]} ${deleteIcon}<br>`;
         $('#favoritedBreweryList').append(theFavList);
     }
     for (var e = 0; e < toVisitArr.length; e++) {
         var pinIcon = `<i class="fas fa-map-pin fa-1x uk-margin-small-right"></i>`;
-        var checkIcon = `<i class="fas fa-check uk-align-right" id="checkOff" data-index="${e}"></i>`;
+        var checkIcon = `<i class="fas fa-check" id="checkOff" data-index="${e}"></i>`;
         var theVisitLaterList = `${pinIcon} ${toVisitArr[e]} ${checkIcon}<br>`;
         $('#futureBreweryList').append(theVisitLaterList);
     }
@@ -56,7 +56,7 @@ renderList = () => {
             // List available brewery names
             var breweryName = breweryArr[i].name;
             var breweryLi = `
-                <button type="button" class="breweryBtn uk-width-1-1">${breweryName}</button>
+                <button type="button" class="breweryBtn uk-width-1-1 uk-button uk-button-text uk-margin-small-top">${breweryName}</button>
             `
             $('#listDiv').append(breweryLi);
         }
@@ -165,8 +165,9 @@ userSearch = (e) => {
 
     city = $('#inputText').val().trim();
     state = $('.statesList option:selected').val();
-    renderList();
     $('#inputText').val('');
+    $('.statesList option[selected]').prop('selected', true);
+    renderList();
 }
 
 // Event listener for the brewery buttons
@@ -207,6 +208,16 @@ $('#infoDiv').on('click', '#favoritesBtn', function() {
     displayLists();
 });
 
+// Event listener for delete favorites item buttons
+$('#favoritedBreweryList').on('click', '#deleteItem', function() {
+    var breweryIndex = $(this).attr('data-index');
+    favoritesArr.splice(breweryIndex, 1);
+    localStorage.setItem("favorites", JSON.stringify(favoritesArr));
+    localStorage.setItem("total-favs", favoritesArr.length);
+    displayLists();
+    renderCounts();
+})
+
 // Event listener for the visit later button
 $('#infoDiv').on('click', '#visitLaterBtn', function() {
     var breweryName = $(this).attr('data-name');
@@ -219,10 +230,7 @@ $('#infoDiv').on('click', '#visitLaterBtn', function() {
     displayLists();
 });
 
-// Event listener for the search button
-$('#inputButton').on('click', userSearch);
-
-// Event listener for visit later check off button
+// Event listener for visit later delete buttons
 $('#futureBreweryList').on('click', '#checkOff', function() {
     var breweryIndex = $(this).attr('data-index');
     toVisitArr.splice(breweryIndex, 1);
@@ -232,12 +240,5 @@ $('#futureBreweryList').on('click', '#checkOff', function() {
     renderCounts();
 })
 
-// Event listener for delete favorites item button
-$('#favoritedBreweryList').on('click', '#deleteItem', function() {
-    var breweryIndex = $(this).attr('data-index');
-    favoritesArr.splice(breweryIndex, 1);
-    localStorage.setItem("favorites", JSON.stringify(favoritesArr));
-    localStorage.setItem("total-favs", favoritesArr.length);
-    displayLists();
-    renderCounts();
-})
+// Event listener for the search button
+$('#inputButton').on('click', userSearch);
