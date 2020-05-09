@@ -35,6 +35,10 @@ footer {
     width: 100%;
 }
 
+.index-footer {
+    position: fixed;
+}
+
 .main-footer {
     padding: 7px   ;
     left: 0;
