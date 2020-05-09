@@ -39,6 +39,10 @@ p {
     font-family: 'Ubuntu', sans-serif;
 }
 
+footer {
+    width: 100%;
+}
+
 .main-footer {
     padding: 7px;
     left: 0;
