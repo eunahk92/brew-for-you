@@ -19,45 +19,36 @@
     <nav id="navigationBar" class="uk-navbar-container" uk-navbar>
             <!-- Total breweries visited on nav bar-->
             <div class="uk-navbar-left uk-inline">
-                    <ul class="navbarCounter" uk-toggle="target: #modal-close-checkin">
-                        <li class="uk-text-center uk-text-danger uk-text-lead" id="brewery-checkin">#</li>
-                        <li class="uk-text-center uk-text-meta">Total Checked In:</li>
-                    </ul>
-                 <div id="modal-close-checkin" uk-dropdown>
-                    <div class="uk-modal-dialog uk-modal-body">
-                        <button class="uk-modal-close-default" type="button" uk-close></button>
-                        <h2 class="uk-modal-title">I've been to:</h2>
-                        <div id="checkedInBreweryList"></div>
-                    </div>
+                <ul class="navbarCounter">
+                    <li class="uk-text-center uk-text-lead uk-text-bold" id="brewery-checkin">#</li>
+                    <li class="uk-text-center uk-text-uppercase uk-text-meta">Check In's</li>
+                </ul>
+                <div uk-dropdown="pos: top-left" style="width:max-content;">
+                    <h5>I've been to:</h5>
+                    <div id="checkedInBreweryList"></div>
                 </div>
             </div>
             <!-- All favorited breweries on nav bar-->
             </div>
             <div class="uk-navbar-center uk-margin-small-right">
-                    <ul class="navbarCounter" uk-toggle="target: #modal-close-default">
-                        <li class="uk-text-center uk-text-danger uk-text-lead" id="brewery-favorites">#</li>
-                        <li class="uk-text-center uk-text-meta" id="favorites-text">Favorite</li>
-                    </ul>
-                <div id="modal-close-default" uk-dropdown>
-                    <div class="uk-modal-dialog uk-modal-body">
-                        <button class="uk-modal-close-default" type="button" uk-close></button>
-                        <h2 class="uk-modal-title">My Favorites!</h2>
-                        <div id="favoritedBreweryList"></div>
-                    </div>
+                <ul class="navbarCounter">
+                    <li class="uk-text-center uk-text-lead uk-text-bold" id="brewery-favorites">#</li>
+                    <li class="uk-text-center uk-text-uppercase uk-text-meta" id="favorites-text">Favorite</li>
+                </ul>
+                <div uk-dropdown="pos: top-center" style="width:max-content;">
+                    <h5>My Favorites!</h5>
+                    <div id="favoritedBreweryList"></div>
                 </div>
             </div>
             <!-- Pinned for next time on nav bar-->
             <div class="uk-navbar-right uk-margin-small-right">
-                    <ul class="navbarCounter" uk-toggle="target: #modal-close-outside">
-                        <li class="uk-text-center uk-text-danger uk-text-lead" id="brewery-visitLater">#</li>
-                        <li class="uk-text-center uk-text-meta">Pin to Visit Later</li>
-                    </ul>
-                <div id="modal-close-outside" uk-dropdown>
-                    <div class="uk-modal-dialog uk-modal-body">
-                        <button class="uk-modal-close-default" type="button" uk-close></button>
-                        <h2 class="uk-modal-title">Be sure to check these out later!</h2>
-                        <div id="futureBreweryList"></div>
-                    </div>
+                <ul class="navbarCounter">
+                    <li class="uk-text-center uk-text-lead uk-text-bold" id="brewery-visitLater">#</li>
+                    <li class="uk-text-center uk-text-uppercase uk-text-meta">Pin For Later</li>
+                </ul>
+                <div uk-dropdown="pos: top-right" style="width:max-content;">
+                    <h5>Be sure to check these out later!</h5>
+                    <div id="futureBreweryList"></div>
                 </div>
             </div>
     </nav>
@@ -72,11 +63,11 @@
             <div class="uk-card uk-card-default uk-card-body">
                 <!--Enter Location(Address?City?)-->
                 <div id="inputDiv">
-                    <input id="inputText" class="uk-input uk-form-width-medium uk-form-small" placeholder="Search City"></input>
-                    <div class="uk-margin">
+                    <input id="inputText" class="uk-input uk-form-width-medium uk-form-medium" placeholder="Search City" type="text"></input>
+                    <div class="uk-margin-small">
                         <div uk-form-custom="target: > * > span:first-child" class="overflow-auto">
                             <select class="statesList form-control">
-                                <option class="states" value="default_selection" selected>Select State...</option>
+                                <option class="states" value="" selected>Select State...</option>
                                 <option class="states" value="Alabama">Alabama</option>
                                 <option class="states" value="Alaska">Alaska</option>
                                 <option class="states" value="Arizona">Arizona</option>
@@ -171,14 +162,7 @@
     </footer>
 
 
-
-
-
-
-
-
-
-    <!---->
+    <!--JS files-->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.4.2/dist/js/uikit.min.js"></script>
