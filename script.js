@@ -35,7 +35,7 @@ displayLists = () => {
     }
     for (var e = 0; e < toVisitArr.length; e++) {
         var pinIcon = `<i class="fas fa-map-pin fa-1x uk-margin-small-right"></i>`;
-        var checkIcon = `<i class="fas fa-check uk-align-right" id="checkOff" data-index="${e}"></i>`;
+        var checkIcon = `<i class="fas fa-check" id="checkOff" data-index="${e}"></i>`;
         var theVisitLaterList = `${pinIcon} ${toVisitArr[e]} ${checkIcon}<br>`;
         $('#futureBreweryList').append(theVisitLaterList);
     }
