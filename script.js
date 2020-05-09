@@ -29,7 +29,7 @@ displayLists = () => {
     }
     for (var d = 0; d < favoritesArr.length; d++) {
         var thumbsUpIcon = `<i class="far fa-thumbs-up fa-1x uk-margin-small-right"></i>`;
-        var deleteIcon = `<i class="fas fa-times uk-align-right" id="deleteItem" data-index="${d}"></i>`;
+        var deleteIcon = `<i class="fas fa-times" id="deleteItem" data-index="${d}"></i>`;
         var theFavList = `${thumbsUpIcon} ${favoritesArr[d]} ${deleteIcon}<br>`;
         $('#favoritedBreweryList').append(theFavList);
     }
