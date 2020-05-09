@@ -2,7 +2,7 @@ var city, state, breweryChosen, checkedIn, filterArr, breweryArr, breweryDatabas
 var breweriesVisitedArr = JSON.parse(localStorage.getItem('checked-in')) || [];
 var toVisitArr = JSON.parse(localStorage.getItem('visit-later')) || [];
 var favoritesArr = JSON.parse(localStorage.getItem('favorites')) || [];
-// var apiKey = '07fd8e30-8eae-4f5f-a07d-ad2608235d7d';
+var apiKey = '07fd8e30-8eae-4f5f-a07d-ad2608235d7d';
 var googleAPIKey = 'AIzaSyCVSbsCoys4-y9UHlX6z93OzyWKnOgnTGw';
 var userLat, userLng;
 
@@ -109,7 +109,6 @@ renderBreweryInfo = () => {
 
 // Map function. (kyle)
 function initMap(lat, lng) {
-    
     if (navigator.geolocation) {
         //console.log("Test1")
         if (!userLat) {
@@ -155,14 +154,12 @@ function initMap(lat, lng) {
                 icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
             });
         }
-        
     }
 }
 
 // Function to grab user inputs
 userSearch = (e) => {
     e.preventDefault();
-
     city = $('#inputText').val().trim();
     state = $('.statesList option:selected').val();
     $('#inputText').val('');
